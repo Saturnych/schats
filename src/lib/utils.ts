@@ -16,6 +16,14 @@ function hexToBase64(str) {
     );
 }
 
+function toHex(str) {
+    var result = '';
+    for (var i=0; i<str.length; i++) {
+      result += str.charCodeAt(i).toString(16);
+    }
+    return result;
+}
+
 export const base64decode = (str: string): string => {
   str = str
       .replace(/-/g, '+')
@@ -64,8 +72,9 @@ export const checkWebAppSignature = async (initData: string, botId: string, publ
   log('checkString:', checkString);
   const base64Signature: string = base64decode(signature);
   log('base64Signature:', base64Signature);
-  log('hexedSignature:', base64ToHex(base64Signature));
-  const checked: boolean = ed25519.verify(base64ToHex(base64Signature), Uint8Array.from(checkString), publicKey); // Uint8Array.from(checkString)
+  log('hexedBase64Signature:', base64ToHex(base64Signature));
+  log('hexedcheckString:', Uint8Array.from(checkString));
+  const checked: boolean = ed25519.verify(base64ToHex(base64Signature), toHex(checkString), publicKey); // Uint8Array.from(checkString) // toHex(checkString)
   log('checked:', checked);
   return checked;
 };
