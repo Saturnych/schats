@@ -6,7 +6,7 @@
 	import { checkWebAppSignature, importJson, postData } from '$lib/utils';
 	import { DEBUG, TELEGRAM_BOT_ID, TELEGRAM_BOT_KEY } from '$lib/vars/client';
 
-	const url = new URL($page.url);
+	const url = new URL(page.url);
 	if (DEBUG) console.log('webapp uri:', url.pathname+url.search);
 
 	let initDataUnsafe: object = $state({});
