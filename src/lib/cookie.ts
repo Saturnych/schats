@@ -45,3 +45,16 @@ export const deleteCookie = (name: string, path: string = '/'): void => {
 		document.cookie = `${name}=;path=${path}; Max-Age=-99999999;`;
 	}
 };
+
+export const parseCookieHeader = (header: string): Record<string, string> => {
+	const cookies = {};
+	if (!!!header) return cookies;
+	const arr = header.split(',').map((ck) => {
+		const cookie = ck.trim().split(';')[0].split('=');
+		cookies[cookie[0]] = cookie[1];
+		return {
+			[cookie[0]]: cookie[1]
+		};
+	});
+	return cookies;
+};
